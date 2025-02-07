@@ -2,4 +2,5 @@
     <string name="app_name">T13-RestApi</string>
     <string name="favoritos">Favoritos</string>
     <string name="rick_y_morty">Rick y Morty</string>
+    <string name="volver">Volver</string>
 </resources>

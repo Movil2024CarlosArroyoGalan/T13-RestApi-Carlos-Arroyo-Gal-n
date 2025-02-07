@@ -21,10 +21,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import net.iessochoa.carlosarroyogalan.t13_restapi.R
+import net.iessochoa.carlosarroyogalan.t13_restapi.data.model.Personaje
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
+    onPulsarPersonaje: (Personaje) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val listaPersonajes = viewModel.personajes.collectAsLazyPagingItems()
@@ -39,7 +41,7 @@ fun HomeScreen(
         Box(modifier = Modifier) {
             when {
                 //Estamos en la carga inicial. No tenemos datos y mostramos un CircularProgressIndicator
-                        listaPersonajes.loadState.refresh is LoadState.Loading && (listaPersonajes.itemCount
+                listaPersonajes.loadState.refresh is LoadState.Loading && (listaPersonajes.itemCount
                         == 0) -> {
                     Box(
                         modifier = Modifier.fillMaxSize()
@@ -66,9 +68,10 @@ fun HomeScreen(
                     Log.i("T11-REstApi", "Personajes cargados en el LazyColumn:${listaPersonajes.itemCount}")
                     LazyColumn (modifier = modifier) {
                         items(listaPersonajes.itemCount) { index ->
-                            listaPersonajes[index]?.let {
+                            listaPersonajes[index]?.let { personaje ->
                                 PersonajeItem(
-                                    personaje = it
+                                    personaje = personaje,
+                                    onItemClick = {onPulsarPersonaje(personaje)}
                                 )
                             }
                         }
@@ -89,6 +92,5 @@ fun HomeScreen(
                 }
             }
         }
-
     }
 }

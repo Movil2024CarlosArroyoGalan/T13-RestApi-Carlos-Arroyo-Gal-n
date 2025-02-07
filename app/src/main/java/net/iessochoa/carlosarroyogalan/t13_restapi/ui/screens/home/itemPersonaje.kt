@@ -1,6 +1,7 @@
 package net.iessochoa.carlosarroyogalan.t13_restapi.ui.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -32,57 +33,57 @@ fun PersonajeItem(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(Color.Transparent),
         onClick = onItemClick) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .background(Color(0xFFE0E0E0), RoundedCornerShape(8.dp))
-                .padding(16.dp)
-        ) {
-            //Imagen de personaje
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(personaje.image)
-                    .build(),
-                //Mientras cargue mostrará esta imagen
-                placeholder = painterResource(R.drawable.ic_loading),
-                error = painterResource(R.drawable.ic_error),
-                contentDescription = personaje.name,
-                contentScale = ContentScale.FillBounds,
+        Box(modifier = Modifier.clickable { onItemClick() }){
+            Row(
                 modifier = Modifier
-                    .size(80.dp)
-                    .align(Alignment.CenterVertically)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .background(Color(0xFFE0E0E0), RoundedCornerShape(8.dp))
+                    .padding(16.dp)
             ) {
-                //Nombre del personaje
-                Text(
-                    text = personaje.name,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(personaje.image)
+                        .build(),
+                    //Mientras cargue mostrará esta imagen
+                    placeholder = painterResource(R.drawable.ic_loading),
+                    error = painterResource(R.drawable.ic_error),
+                    contentDescription = personaje.name,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .align(Alignment.CenterVertically)
                 )
-                //Especie del mismo
-                Text(
-                    text = personaje.especie,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray,
-                    fontSize = 14.sp
-                )
-                //Estado de este, vivo o muerto
-                Text(
-                    text = personaje.estado,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Green,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.End
-                )
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    //Nombre del personaje
+                    Text(
+                        text = personaje.name,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                    //Especie del mismo
+                    Text(
+                        text = personaje.especie,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray,
+                        fontSize = 14.sp
+                    )
+                    //Estado de este, vivo o muerto
+                    Text(
+                        text = personaje.estado,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Green,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.End
+                    )
+                }
             }
         }
     }
