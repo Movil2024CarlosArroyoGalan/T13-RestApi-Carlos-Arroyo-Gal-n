@@ -10,6 +10,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,6 +22,7 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +40,8 @@ fun PersonajeFavoritoItem(
     onItemClick: () -> Unit = {},
     onFavoritoClick: (Personaje) -> Unit = {},
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
     Card(modifier = Modifier,
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(Color.Transparent),
@@ -100,16 +107,36 @@ fun PersonajeFavoritoItem(
                 contentAlignment = Alignment.BottomEnd
             ){
                 IconButton(
-                    onClick =  {onFavoritoClick(personaje)},
+                    onClick =  { showDialog = true},
                     modifier = Modifier.size(40.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Eliminar Favorito",
+                        contentDescription = stringResource(R.string.eliminar_favorito),
                     )
                 }
             }
 
         }
+    }
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(stringResource(R.string.confirmacion_de_eliminaci_n)) },
+            text = { Text(stringResource(R.string.confirmacion)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    onFavoritoClick(personaje)
+                    showDialog = false
+                }) {
+                    Text(stringResource(R.string.si))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text(stringResource(R.string.no))
+                }
+            }
+        )
     }
 }
