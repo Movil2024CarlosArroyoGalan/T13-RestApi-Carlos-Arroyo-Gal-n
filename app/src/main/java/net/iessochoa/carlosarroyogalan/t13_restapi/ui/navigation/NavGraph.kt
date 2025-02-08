@@ -67,7 +67,10 @@ fun AppNavigation(){
                 )
             }
             composable(FavoritosDestination.route) {
-                FavoritesScreen()
+                FavoritesScreen(onPersonajeClick = { personaje ->
+                    val personajeJson = personajeToJson(personaje)
+                    navController.navigate(DetallesDestination(personajeJson))
+                })
             }
         }
     }

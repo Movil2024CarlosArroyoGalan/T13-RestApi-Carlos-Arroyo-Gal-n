@@ -19,7 +19,8 @@ import net.iessochoa.carlosarroyogalan.t13_restapi.ui.screens.home.HomeViewModel
 
 @Composable
 fun FavoritesScreen(
-    viewModel: FavoritoViewModel = viewModel()
+    viewModel: FavoritoViewModel = viewModel(),
+    onPersonajeClick: (Personaje) -> Unit = {}
 ) {
     val personajeFavorito = viewModel.personajesFavoritos.collectAsState(initial = emptyList()).value
     Column (modifier = Modifier.fillMaxSize()) {
@@ -35,7 +36,7 @@ fun FavoritesScreen(
                 val personajeFavoritop = personajeFavorito[index]
                 PersonajeFavoritoItem(
                     personaje = personajeFavoritop.toModel(),
-                    onItemClick = {},
+                    onItemClick = {onPersonajeClick(personajeFavoritop.toModel())},
                     onFavoritoClick = { personaje ->
                         viewModel.eliminarFavorito(personaje)
                     }
