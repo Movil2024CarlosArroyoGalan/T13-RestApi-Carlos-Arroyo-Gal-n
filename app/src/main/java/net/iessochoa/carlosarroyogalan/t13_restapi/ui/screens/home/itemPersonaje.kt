@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -33,7 +34,9 @@ fun PersonajeItem(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(Color.Transparent),
         onClick = onItemClick) {
-        Box(modifier = Modifier.clickable { onItemClick() }){
+        Box(modifier = Modifier
+            .clip(RoundedCornerShape(25.dp))
+            .clickable { onItemClick() }){
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

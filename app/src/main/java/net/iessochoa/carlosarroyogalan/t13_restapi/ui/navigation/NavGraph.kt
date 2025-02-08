@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.google.gson.Gson
 import net.iessochoa.carlosarroyogalan.t13_restapi.data.model.Personaje
 import net.iessochoa.carlosarroyogalan.t13_restapi.ui.components.BarraNavegacion
@@ -53,27 +54,25 @@ fun AppNavigation(){
             modifier = Modifier.padding(padding)
         ) {
             composable(HomeDestination.route) { HomeScreen(onPulsarPersonaje = {personaje ->
-                val personajeJson = Uri.encode(personajeToJson(personaje))
-                navController.navigate("detalle/$personajeJson")
+                val personajeJson = personajeToJson(personaje)
+                navController.navigate(DetallesDestination(personajeJson))
                 })
             }
-            composable(DetalleDestination.route) { navBackStackEntry ->
-                val personajeJson = navBackStackEntry.arguments?.getString("personajeJson")
-                if (personajeJson != null){
-                    val decodedJson = Uri.encode(personajeJson)
-                    val personaje = jsonToPersonaje(decodedJson)
-                    DetalleScreen(
-                        personajeJson = personaje,
-                        onVolver = {navController.popBackStack()}
-                    )
-                }
+            composable<DetallesDestination> {navBackStackEntry ->
+                val detallesDestination: DetallesDestination = navBackStackEntry.toRoute()
+                val personaje = jsonToPersonaje(detallesDestination.personaje)
+                DetalleScreen(
+                    personajeJson = personaje,
+                    onVolver = {navController.popBackStack()}
+
+                )
             }
-            composable(FavoritosDestination.route) { FavoritesScreen() }
+            composable(FavoritosDestination.route) {
+                FavoritesScreen()
+            }
         }
     }
 }
-
-
 
 fun personajeToJson(personaje: Personaje): String {
     val gson = Gson()

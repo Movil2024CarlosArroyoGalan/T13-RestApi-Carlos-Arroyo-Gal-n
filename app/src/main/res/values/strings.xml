@@ -3,4 +3,6 @@
     <string name="favoritos">Favoritos</string>
     <string name="rick_y_morty">Rick y Morty</string>
     <string name="volver">Volver</string>
+    <string name="imagen_del_personaje">Imagen del personaje</string>
+    <string name="detalle_personaje">Detalle Personaje</string>
 </resources>
