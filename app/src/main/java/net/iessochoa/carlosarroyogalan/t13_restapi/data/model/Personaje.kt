@@ -1,10 +1,13 @@
 package net.iessochoa.carlosarroyogalan.t13_restapi.data.model
 
 import android.icu.text.DateFormat
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.Date
 import java.util.Locale
-
+@Entity(tableName = "personaje")
 data class Personaje(
+    @PrimaryKey
     val id: Int,
     val name: String,
     val status: String,

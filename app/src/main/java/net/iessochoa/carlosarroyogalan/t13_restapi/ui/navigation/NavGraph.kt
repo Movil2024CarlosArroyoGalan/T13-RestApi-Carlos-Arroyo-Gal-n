@@ -64,7 +64,6 @@ fun AppNavigation(){
                 DetalleScreen(
                     personajeJson = personaje,
                     onVolver = {navController.popBackStack()}
-
                 )
             }
             composable(FavoritosDestination.route) {

@@ -11,6 +11,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,6 +32,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val listaPersonajes = viewModel.personajes.collectAsLazyPagingItems()
+    val idFavorito by viewModel.idFavorito.collectAsState(initial = emptyList())
     Column (modifier = Modifier.fillMaxWidth()) {
         Text(
             text = stringResource(R.string.rick_y_morty),
@@ -56,11 +59,11 @@ fun HomeScreen(
                 //Recuperamos datos y no tenemos ninguno mostramos un mensaje
                 listaPersonajes.loadState.append is LoadState.NotLoading && listaPersonajes.itemCount
                         == 0 -> {
-                    Text(text = "No hay personajes")
+                    Text(text = stringResource(R.string.no_hay_personajes))
                 }
                 //Si tenemos datos pero no se han podido recuperar del error
                 listaPersonajes.loadState.hasError -> {
-                    Text(text = "Error: ")
+                    Text(text = stringResource(R.string.error))
                 }
                 //Tenemos nuevos datos, los mostramos en la lista
                 else -> {
@@ -71,7 +74,9 @@ fun HomeScreen(
                             listaPersonajes[index]?.let { personaje ->
                                 PersonajeItem(
                                     personaje = personaje,
-                                    onItemClick = {onPulsarPersonaje(personaje)}
+                                    onItemClick = {onPulsarPersonaje(personaje)},
+                                    idFavorito = idFavorito,
+                                    onFavoritoClick = {viewModel.activarFavorito(personaje)}
                                 )
                             }
                         }

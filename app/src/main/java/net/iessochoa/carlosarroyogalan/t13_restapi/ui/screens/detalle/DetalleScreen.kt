@@ -68,7 +68,6 @@ fun DetalleScreen(
                         .fillMaxWidth()
                         .weight(1f)
                 )
-
                 // Nombre del personaje estilizado
                 Text(
                     text = personajeJson.name.uppercase(),
@@ -80,7 +79,6 @@ fun DetalleScreen(
                 )
                 //Separación
                 Spacer(modifier = Modifier.height(8.dp))
-
                 // Datos del personaje
                 Column(
                     modifier = Modifier
@@ -101,7 +99,7 @@ fun DetalleScreen(
                         fontSize = 30.sp,
                         color = Color.Black)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Creado el dia: " + personajeJson.created.toString(),
+                    Text(text = "Creado el dia: " + personajeJson.fecha.toString(),
                         fontSize = 30.sp,
                         color = Color.Black)
                 }

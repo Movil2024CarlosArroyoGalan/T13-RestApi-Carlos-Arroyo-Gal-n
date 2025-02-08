@@ -5,6 +5,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import net.iessochoa.carlosarroyogalan.t13_restapi.data.entities.PersonajeFavorito
+import net.iessochoa.carlosarroyogalan.t13_restapi.data.model.Personaje
 import net.iessochoa.carlosarroyogalan.t13_restapi.data.repository.Repository
 
 class HomeViewModel : ViewModel() {
@@ -26,4 +31,33 @@ class HomeViewModel : ViewModel() {
         .flow
     //para mantener el estado de paginación a través de los cambios de configuración o navegación
         .cachedIn(viewModelScope)
+    private val idPersonajeFavorito = MutableStateFlow<List<Int>>(emptyList())
+    val idFavorito: StateFlow<List<Int>> = idPersonajeFavorito
+    init {
+        viewModelScope.launch {
+            Repository.obtenerIdPersonajeFavorito().collect { ids ->
+                idPersonajeFavorito.value = ids
+            }
+        }
+    }
+    fun activarFavorito(personaje: Personaje) {
+        viewModelScope.launch {
+            if (idPersonajeFavorito.value.contains(personaje.id)) {
+                Repository.eliminarFavorito(personaje.toEntity())
+            } else {
+                Repository.añadirFavorito(personaje.toEntity())
+            }
+        }
+    }
+}
+fun Personaje.toEntity(): PersonajeFavorito {
+    return PersonajeFavorito(
+        id = id,
+        name = name,
+        status = status,
+        species = species,
+        type = type,
+        gender = gender,
+        image = image
+    )
 }

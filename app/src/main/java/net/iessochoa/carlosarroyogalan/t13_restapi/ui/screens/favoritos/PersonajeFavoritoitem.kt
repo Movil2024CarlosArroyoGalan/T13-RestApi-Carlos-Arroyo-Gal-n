@@ -1,10 +1,11 @@
-package net.iessochoa.carlosarroyogalan.t13_restapi.ui.screens.home
+package net.iessochoa.carlosarroyogalan.t13_restapi.ui.screens.favoritos
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
@@ -17,7 +18,6 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,14 +30,11 @@ import net.iessochoa.carlosarroyogalan.t13_restapi.data.model.Personaje
 
 //Tarjeta de personaje
 @Composable
-fun PersonajeItem(
+fun PersonajeFavoritoItem(
     personaje: Personaje,
-    idFavorito: List<Int>,
     onItemClick: () -> Unit = {},
     onFavoritoClick: (Personaje) -> Unit = {},
-    modifier: Modifier = Modifier
 ) {
-    val favorito = idFavorito.contains(personaje.id)
     Card(modifier = Modifier,
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(Color.Transparent),
@@ -107,12 +104,8 @@ fun PersonajeItem(
                     modifier = Modifier.size(40.dp)
                 ) {
                     Icon(
-                        imageVector = if (favorito)
-                        Icons.Default.Favorite
-                        else
-                        Icons.Default.FavoriteBorder,
-                        contentDescription = if (favorito) stringResource(R.string.eliminar_favorito)
-                        else stringResource(R.string.a_adir_favorito),
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Eliminar Favorito",
                     )
                 }
             }
