@@ -27,11 +27,15 @@ import net.iessochoa.carlosarroyogalan.t13_restapi.data.model.Personaje
 
 @Composable
 fun HomeScreen(
+    //ViewModel de manejo de personajes
     viewModel: HomeViewModel = viewModel(),
+    //Acción cuando de pulsa un personaje
     onPulsarPersonaje: (Personaje) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    //Lista paginada de personajes
     val listaPersonajes = viewModel.personajes.collectAsLazyPagingItems()
+    //Estado de los personajes favoritos
     val idFavorito by viewModel.idFavorito.collectAsState(initial = emptyList())
     Column (modifier = Modifier.fillMaxWidth()) {
         Text(

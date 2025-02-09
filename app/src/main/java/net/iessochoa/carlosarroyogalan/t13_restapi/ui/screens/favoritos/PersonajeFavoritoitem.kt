@@ -41,11 +41,12 @@ fun PersonajeFavoritoItem(
     onFavoritoClick: (Personaje) -> Unit = {},
 ) {
     var showDialog by remember { mutableStateOf(false) }
-
+    //Carta para cada personaje
     Card(modifier = Modifier,
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(Color.Transparent),
         onClick = onItemClick) {
+        //Caja que almacenará toda la información
         Box(modifier = Modifier
             .clip(RoundedCornerShape(25.dp))
             .clickable { onItemClick() }){
@@ -56,6 +57,7 @@ fun PersonajeFavoritoItem(
                     .background(Color(0xFFE0E0E0), RoundedCornerShape(8.dp))
                     .padding(16.dp)
             ) {
+                //Imagen del margen izquierdo
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(personaje.image)

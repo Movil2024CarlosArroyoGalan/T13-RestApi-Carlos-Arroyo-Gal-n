@@ -32,11 +32,15 @@ import net.iessochoa.carlosarroyogalan.t13_restapi.data.model.Personaje
 @Composable
 fun PersonajeItem(
     personaje: Personaje,
+    //Funcion que obtiene el id del personaje favorito seleccionado
     idFavorito: List<Int>,
+    //Funcion que llama cuando hace click en la carta del personaje
     onItemClick: () -> Unit = {},
+    //Funcion que llama cuando hace click en el favoritos
     onFavoritoClick: (Personaje) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    //Valor favorito que acreditará que el personaje a sido añadido a favoritos para añadirlo a la ventana
     val favorito = idFavorito.contains(personaje.id)
     Card(modifier = Modifier,
         shape = RoundedCornerShape(25.dp),
@@ -96,16 +100,19 @@ fun PersonajeItem(
                     )
                 }
             }
+            //Caja que almacena el boton para mandar el personaje a favoritos
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(8.dp),
                 contentAlignment = Alignment.BottomEnd
             ){
+                //Funcion del boton cuando se pulsa
                 IconButton(
                     onClick =  {onFavoritoClick(personaje)},
                     modifier = Modifier.size(40.dp)
                 ) {
+                    //Icono del boton
                     Icon(
                         imageVector = if (favorito)
                         Icons.Default.Favorite

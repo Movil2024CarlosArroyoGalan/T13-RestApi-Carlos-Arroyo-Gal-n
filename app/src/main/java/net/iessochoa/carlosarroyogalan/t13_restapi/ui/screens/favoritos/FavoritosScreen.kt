@@ -19,11 +19,16 @@ import net.iessochoa.carlosarroyogalan.t13_restapi.ui.screens.home.HomeViewModel
 
 @Composable
 fun FavoritesScreen(
+    //ViewModel para gestionar los favoritos
     viewModel: FavoritoViewModel = viewModel(),
+    //Función al clickar sobre un personaje
     onPersonajeClick: (Personaje) -> Unit = {}
 ) {
+    //Estado del personaje obtenido desde el viewModel
     val personajeFavorito = viewModel.personajesFavoritos.collectAsState(initial = emptyList()).value
+    //Contenedor principal con columna
     Column (modifier = Modifier.fillMaxSize()) {
+        //Titulo
         Text(
             text = stringResource(R.string.favoritos),
             textAlign = TextAlign.Center,
@@ -31,12 +36,17 @@ fun FavoritesScreen(
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.fillMaxWidth()
         )
+        //Lista de personajes favoritos
         LazyColumn (modifier = Modifier.fillMaxSize()) {
+            //Item para cada personaje diferente
             items(personajeFavorito.size) { index ->
                 val personajeFavoritop = personajeFavorito[index]
                 PersonajeFavoritoItem(
+                    //Convierte el personaje a su modelo correspondiente
                     personaje = personajeFavoritop.toModel(),
+                    //Acción al pulsar el item
                     onItemClick = {onPersonajeClick(personajeFavoritop.toModel())},
+                    //Acción para eliminar el personaje de los favoritos
                     onFavoritoClick = { personaje ->
                         viewModel.eliminarFavorito(personaje)
                     }

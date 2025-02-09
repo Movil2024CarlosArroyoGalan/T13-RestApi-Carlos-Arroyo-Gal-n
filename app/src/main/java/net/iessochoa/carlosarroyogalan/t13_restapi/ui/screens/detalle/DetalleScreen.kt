@@ -27,22 +27,25 @@ import net.iessochoa.carlosarroyogalan.t13_restapi.ui.components.TopAppScreenBar
 
 @Composable
 fun DetalleScreen(
+    //Recibe el objeto Personaje en formato JSON
     personajeJson: Personaje,
+    //Funcion para volver a la pantalla anterior
     onVolver: () -> Unit = {}
 ) {
+    //Contenedor
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        //Barra superior con el titulo y boton de regreso
         TopAppScreenBar(
             tituloPantallaActual = stringResource(R.string.detalle_personaje),
             PantallaAnterior = true,
             Atras = onVolver
         )
-
-        // Tarjeta para almacenar la informacion
+        // Tarjeta para almacenar la informacion del personaje
         Card(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,13 +54,14 @@ fun DetalleScreen(
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFD6D6F5))
         ) {
+            //Contenido
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                //Imagen del perssonaje ubicada en la parte superior
+                //Imagen del personaje ubicada en la parte superior
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(personajeJson.image)
@@ -86,19 +90,24 @@ fun DetalleScreen(
                         .weight(1f),
                     horizontalAlignment = Alignment.Start
                 ) {
+                    //Genero
                     Text(
                         text = personajeJson.genero,
                         fontSize = 30.sp,
                         color = Color.Black)
+                    //Separación
                     Spacer(modifier = Modifier.height(8.dp))
+                    //Estado
                     Text(text = personajeJson.estado,
                         fontSize = 30.sp,
                         color = Color.Black)
                     Spacer(modifier = Modifier.height(8.dp))
+                    //Especie
                     Text(text = personajeJson.especie,
                         fontSize = 30.sp,
                         color = Color.Black)
                     Spacer(modifier = Modifier.height(8.dp))
+                    //Creación
                     Text(text = "Creado el dia: " + personajeJson.fecha.toString(),
                         fontSize = 30.sp,
                         color = Color.Black)

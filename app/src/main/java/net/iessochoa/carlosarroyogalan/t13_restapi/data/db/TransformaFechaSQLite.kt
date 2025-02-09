@@ -14,6 +14,7 @@ class TransformaFechaSQLite {
         //le quitamos la hora, pero si la necesitárais, no llaméis a removeTime
         return if (date == null) null else removeTime(date).time
     }
+    //Metodo que elimina las horas dejando solo la fecha completa
     fun removeTime(date: Date?): Date {
         val cal = Calendar.getInstance()
         cal.time = date

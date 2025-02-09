@@ -40,6 +40,7 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+    //Activación del estado del personaje en favorito
     fun activarFavorito(personaje: Personaje) {
         viewModelScope.launch {
             if (idPersonajeFavorito.value.contains(personaje.id)) {
